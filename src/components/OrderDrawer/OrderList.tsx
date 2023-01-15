@@ -13,7 +13,7 @@ type OrderListProps = {
   setOpen: (open: boolean) => void;
 };
 
-const OrderList = ({ setOpen }:OrderListProps) => {
+const OrderList = ({ setOpen }: OrderListProps) => {
   const { order, setOrder } = useFood();
 
   const [errorOrderMessage, setErrorOrderMessage] = useState(false);
@@ -25,54 +25,57 @@ const OrderList = ({ setOpen }:OrderListProps) => {
 
   return (
     <>
-      <Paper>
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "background.paper",
-          }}
-        >
-          {errorOrderMessage && (
-            <Stack sx={{ width: "100%" }} spacing={2}>
-              <Alert variant="outlined" severity="error">
-                This is an error alert — check it out!
-              </Alert>
-            </Stack>
-          )}
-          {order.map((food) => {
-            const labelId = `checkbox-list-label-${food.id}`;
-            return (
-              <ListItem
-                key={food.id}
-                secondaryAction={
-                  <ListItemIcon>
-                    <DeleteIcon onClick={handleToggle(food.id)} />
-                  </ListItemIcon>
-                }
-                disablePadding
-              >
-                <ListItemButton role={undefined} dense>
-                  <ListItemText
-                    sx={{ size: "2rem" }}
-                    id={labelId}
-                    primary={
-                      <Typography
-                        component="span"
-                        variant="inherit"
-                        sx={{ fontSize: 17 }}
-                      >
-                        {food?.quantity} - {food?.name} {food.price}R$
-                      </Typography>
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
-      </Paper>
-      <SaveButton setErrorOrderMessage={setErrorOrderMessage} setOpen={setOpen} />
+      <List
+        sx={{
+          width: "100%",
+          maxWidth: 360,
+          bgcolor: "background.paper",
+          m: "auto",
+        }}
+      >
+        {errorOrderMessage && (
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert variant="outlined" severity="error">
+              This is an error alert — check it out!
+            </Alert>
+          </Stack>
+        )}
+        {order.map((food) => {
+          const labelId = `checkbox-list-label-${food.id}`;
+          return (
+            <ListItem
+              sx={{  mt: 1.5 }}
+              key={food.id}
+              secondaryAction={
+                <ListItemIcon>
+                  <DeleteIcon onClick={handleToggle(food.id)} />
+                </ListItemIcon>
+              }
+              disablePadding
+            >
+              <ListItemButton role={undefined} dense>
+                <ListItemText
+                  sx={{ size: "2rem" }}
+                  id={labelId}
+                  primary={
+                    <Typography
+                      component="span"
+                      variant="inherit"
+                      sx={{ fontSize: 17 }}
+                    >
+                      {food?.quantity} - {food?.name} {food.price}R$
+                    </Typography>
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+      <SaveButton
+        setErrorOrderMessage={setErrorOrderMessage}
+        setOpen={setOpen}
+      />
     </>
   );
 };

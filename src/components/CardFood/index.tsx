@@ -1,6 +1,8 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { useFood } from "../../hooks";
+import ButtonOrder from "../Button";
+import "./index.css";
 
 type Food = {
   setToggleModal: (boolean: boolean) => void;
@@ -8,7 +10,7 @@ type Food = {
     name: string;
     img: string;
     price: number;
-    ingredients: string;
+    ingredients?: string;
     id: number;
   };
 };
@@ -24,27 +26,36 @@ export const CardFood = (props: Food) => {
         mt: 3,
         flexGrow: 1,
         typography: "body1",
+        borderBottom: "4px solid #000",
       }}
     >
-      <Paper
+      <Box
         onClick={() => {
           props.setToggleModal(true);
           setCurrentFood({ name: name, price: price, id: id });
         }}
-        sx={{ background: "#000", color: "#fff", minHeight: "100px", p: 1 }}
+        display="flex"
       >
-        <Box display="flex">
-          <img height={110} width={150} src={img} alt="" />
-          <Box sx={{ ml: 2 }}>
-            <Typography component="span" variant="h5" align="center">
-              {name}
-            </Typography>
-            <Typography component="span" variant="h6" sx={{ mt: 2, ml: 2 }}>
-              {price}R$
-            </Typography>
-          </Box>
+        <img height={110} width={150} src={img} alt="" />
+        <Box sx={{ ml: 2 }}>
+          <Typography
+            component="span"
+            variant="h5"
+            align="center"
+            color="#dad6d6"
+          >
+            {name}
+          </Typography>
+
+          <ButtonOrder
+            data={"Adicionar"}
+            width={150}
+            p={1}
+            back={"#fa942e"}
+            color={"#fff"}
+          />
         </Box>
-      </Paper>
+      </Box>
     </Box>
   );
 };

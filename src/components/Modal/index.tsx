@@ -22,8 +22,6 @@ type OrderModalProps = {
 
 const OrderModal = ({ setToggleModal, toggleModal }: OrderModalProps) => {
   const { currentFood } = useFood();
-  const [b, setB] = useState<number>(0);
-  // console.log(b);
 
   return (
     <div>
@@ -36,7 +34,6 @@ const OrderModal = ({ setToggleModal, toggleModal }: OrderModalProps) => {
         <Box sx={style}>
           <Box display="flex">
             <Typography
-              onClick={() => setB((old) => old + 1)}
               sx={{ mr: 3 }}
               letterSpacing={1}
               id="modal-modal-title"

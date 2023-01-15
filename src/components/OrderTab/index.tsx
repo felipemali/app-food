@@ -9,26 +9,58 @@ import { FoodProps, data } from "../../helpers/foods";
 import OrderModal from "../Modal";
 import Drawer from "../OrderDrawer";
 import OrdersToMake from "../OrdersToMake";
-import { avatarClasses } from "@mui/material";
-import { type } from "@testing-library/user-event/dist/type";
+import { Typography } from "@mui/material";
 
 const OrderTab = () => {
   const [value, setValue] = React.useState("1");
   const [toggleModal, setToggleModal] = React.useState<boolean>(false);
-  const [valueInput, setValueInput] = React.useState<any>();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: "100%", typography: "body1", mt: 2 }}>
+    <Box
+      sx={{
+        width: "100%",
+        typography: "body1",
+
+        borderRadius: "25px 25px 0 0",
+        background: " linear-gradient(90deg, #220e03f8 8%, #4d1f04f8 95%)",
+      }}
+    >
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Cardápio" value="1" />
-            <Tab label="Pedido" value="2" />
-            <Tab label="Para Fazer" value="3" />
+          <TabList
+            sx={{ ml: 5 }}
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="lab API tabs example"
+          >
+            <Tab
+              label={
+                <Typography component="span" variant="inherit" color="#fff">
+                  Cardápio
+                </Typography>
+              }
+              value="1"
+            />
+            <Tab
+              label={
+                <Typography component="span" variant="inherit" color="#fff">
+                  Bebidas
+                </Typography>
+              }
+              value="2"
+            />
+            <Tab
+              label={
+                <Typography component="span" variant="inherit" color="#fff">
+                  Há Fazer
+                </Typography>
+              }
+              value="3"
+            />
           </TabList>
         </Box>
         <TabPanel value="1">

@@ -1,12 +1,6 @@
-export type FoodProps = {
-  name: string;
-  img: string;
-  price: number;
-  ingredients?: string;
-  id: number;
-};
+import { FoodProps } from "./foods";
 
-export const data: FoodProps[] = [
+export const drinksData: FoodProps[] = [
   {
     name: "Misto Quente",
     img: "https://paraisodacozinha.com.br/wp-content/uploads/misto-quente-tradicional-a.jpg",
