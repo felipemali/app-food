@@ -4,11 +4,13 @@ import ButtonOrder from "../Button";
 import ShoppingCart from "../../assets/carrinho.png";
 import Fast from "../../assets/fast.jpg";
 import Lanche from "../../assets/lanche.png";
+import { useFood } from "../../hooks";
 
 const InfoOrder = () => {
   const style = {
     ml: 1,
   };
+  const { qntToMake, totalMade } = useFood();
   return (
     <Box
       component="div"
@@ -25,13 +27,13 @@ const InfoOrder = () => {
         <Typography component="span" variant="subtitle1">
           Pedidos há fazer:
           <Typography component="span" color="#fa942e" sx={{ ml: style.ml }}>
-            5
+            {qntToMake}
           </Typography>
         </Typography>
         <Typography variant="subtitle1" sx={{ mt: 1 }}>
           Feitos:
           <Typography component="span" color="#fa942e" sx={{ ml: style.ml }}>
-            5
+            {totalMade}
           </Typography>
         </Typography>
         <Typography variant="subtitle1" sx={{ mt: 1 }}>

@@ -8,15 +8,22 @@ import { useFood } from "../../hooks";
 import { Alert, Paper, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveButton from "./SaveButton";
+import { spawn } from "child_process";
+import TextField from "@mui/material/TextField";
 
 type OrderListProps = {
   setOpen: (open: boolean) => void;
+  errorOrderMessage: boolean;
+  setErrorOrderMessage: (error: boolean) => void;
 };
 
-const OrderList = ({ setOpen }: OrderListProps) => {
+const OrderList = ({
+  setOpen,
+  errorOrderMessage,
+  setErrorOrderMessage,
+}: OrderListProps) => {
   const { order, setOrder } = useFood();
-
-  const [errorOrderMessage, setErrorOrderMessage] = useState(false);
+  const [inputAnotation, setInputAnotation] = useState<string>("");
 
   const handleToggle = (value: number) => () => {
     const exclued = order.filter((id) => id.id !== value);
@@ -34,17 +41,26 @@ const OrderList = ({ setOpen }: OrderListProps) => {
         }}
       >
         {errorOrderMessage && (
-          <Stack sx={{ width: "100%" }} spacing={2}>
+          <Stack sx={{ width: "100%", mb: 2 }} spacing={2}>
             <Alert variant="outlined" severity="error">
-              This is an error alert — check it out!
+              Lista de pedidos vazia!!!
             </Alert>
           </Stack>
         )}
+        <TextField
+          id="outlined-basic"
+          label="Anotação..."
+          variant="outlined"
+          size="small"
+          autoComplete="off"
+          onChange={(e) => setInputAnotation(e.target.value)}
+        />
+
         {order.map((food) => {
           const labelId = `checkbox-list-label-${food.id}`;
           return (
             <ListItem
-              sx={{  mt: 1.5 }}
+              sx={{ mt: 1.5 }}
               key={food.id}
               secondaryAction={
                 <ListItemIcon>
@@ -73,6 +89,7 @@ const OrderList = ({ setOpen }: OrderListProps) => {
         })}
       </List>
       <SaveButton
+        inputAnotation={inputAnotation}
         setErrorOrderMessage={setErrorOrderMessage}
         setOpen={setOpen}
       />

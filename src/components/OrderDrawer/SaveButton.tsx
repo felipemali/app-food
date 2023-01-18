@@ -2,17 +2,41 @@ import { useState, useRef, useEffect } from "react";
 import { green } from "@mui/material/colors";
 import { useFood } from "../../hooks";
 import { CircularProgress, Button, Box, Snackbar } from "@mui/material";
+import { Link } from "react-router-dom";
+import { routes } from "../../routes";
 
 type SaveButtonProps = {
   setErrorOrderMessage: (error: boolean) => void;
   setOpen: (open: boolean) => void;
+  inputAnotation?: string;
 };
 
-const SaveButton = ({ setErrorOrderMessage, setOpen }: SaveButtonProps) => {
+export type Item = {
+  name: string;
+  price: number;
+  quantity: number;
+  id: number;
+  anotation?: string;
+  total_price: number;
+};
+
+export type Order = {
+  id: string;
+  total: number;
+  anotation?: string;
+  date?: string;
+  items: Item[];
+};
+
+const SaveButton = ({
+  setErrorOrderMessage,
+  setOpen,
+  inputAnotation,
+}: SaveButtonProps) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const { order, setToMake, toMake, setOrder } = useFood();
+  const { order, setToMake, toMake, setOrder, setQntToMake } = useFood();
   const timer = useRef<number>();
 
   const buttonSx = {
@@ -29,6 +53,7 @@ const SaveButton = ({ setErrorOrderMessage, setOpen }: SaveButtonProps) => {
       clearTimeout(timer.current);
     };
   }, []);
+  const a: Order[] = [{ id: "a", total: 5, anotation: "eeee", items: order }];
 
   const handleButtonClick = () => {
     if (!loading) {
@@ -40,6 +65,7 @@ const SaveButton = ({ setErrorOrderMessage, setOpen }: SaveButtonProps) => {
         if (order.length > 0) {
           setSuccess(true);
           setOpen(false);
+          setQntToMake((oldNum) => oldNum + 1);
         } else {
           setErrorOrderMessage(true);
         }
@@ -47,7 +73,10 @@ const SaveButton = ({ setErrorOrderMessage, setOpen }: SaveButtonProps) => {
       setSuccess(false);
     }
     if (order.length > 0) {
-      setToMake([...toMake, order]);
+      setToMake([
+        ...toMake,
+        [{ id: "a", total: 5, anotation: "eeee", items: order }],
+      ]);
     }
   };
 
@@ -69,6 +98,7 @@ const SaveButton = ({ setErrorOrderMessage, setOpen }: SaveButtonProps) => {
         >
           Finalizar Pedido
         </Button>
+
         {loading && (
           <CircularProgress
             size={24}

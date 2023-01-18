@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { useFood } from "../../hooks";
 type ProgressProps = {
   setToggleModal: (boolean: boolean) => void;
+  setErrorOrderMessage: (error: boolean) => void;
 };
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -35,7 +36,7 @@ function CircularProgressWithLabel(
   );
 }
 
-const Progress = ({ setToggleModal }: ProgressProps) => {
+const Progress = ({ setToggleModal, setErrorOrderMessage }: ProgressProps) => {
   const [progress, setProgress] = useState<number>(1);
 
   const { order, setOrder, currentFood } = useFood();
@@ -55,6 +56,7 @@ const Progress = ({ setToggleModal }: ProgressProps) => {
           quantity: progress,
           id: currentFood.id,
           total_price: progress * currentFood.price,
+          
         },
       ]);
     }
@@ -62,7 +64,6 @@ const Progress = ({ setToggleModal }: ProgressProps) => {
       setToggleModal(false);
     }, 150);
   };
-  console.log(order);
 
   return (
     <Box sx={{ ml: "auto", mr: "auto", mt: 3, width: "60%" }}>
@@ -100,6 +101,7 @@ const Progress = ({ setToggleModal }: ProgressProps) => {
         variant="outlined"
         onClick={() => {
           checkFood();
+          setErrorOrderMessage(false);
         }}
       >
         Ok

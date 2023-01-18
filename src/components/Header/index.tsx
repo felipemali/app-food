@@ -9,7 +9,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
-import InfoOrder from "../../components/InfoOrder";
+import InfoOrder from "../InfoOrders";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [auth, setAuth] = React.useState(true);

@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Progress from "./Progress";
 import { useFood } from "../../hooks";
+import { TextField } from "@mui/material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -18,9 +19,14 @@ const style = {
 type OrderModalProps = {
   setToggleModal: (boolean: boolean) => void;
   toggleModal: boolean;
+  setErrorOrderMessage: (error: boolean) => void;
 };
 
-const OrderModal = ({ setToggleModal, toggleModal }: OrderModalProps) => {
+const OrderModal = ({
+  setToggleModal,
+  toggleModal,
+  setErrorOrderMessage,
+}: OrderModalProps) => {
   const { currentFood } = useFood();
 
   return (
@@ -52,8 +58,18 @@ const OrderModal = ({ setToggleModal, toggleModal }: OrderModalProps) => {
               {currentFood?.price}R$
             </Typography>
           </Box>
+          <TextField
+            id="outlined-basic"
+            label="Anotação..."
+            variant="outlined"
+            size="small"
+            autoComplete="off"
+          />
 
-          <Progress setToggleModal={setToggleModal} />
+          <Progress
+            setToggleModal={setToggleModal}
+            setErrorOrderMessage={setErrorOrderMessage}
+          />
         </Box>
       </Modal>
     </div>

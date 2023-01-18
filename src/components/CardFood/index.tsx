@@ -15,6 +15,16 @@ type Food = {
   };
 };
 
+type Drink = {
+  drinks: {
+    name: string;
+    img: string;
+    price: number;
+    ingredients?: string;
+    id: number;
+  };
+};
+
 export const CardFood = (props: Food) => {
   const { name, img, price, ingredients, id } = props.foods;
   const { setCurrentFood, order } = useFood();

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -10,10 +10,14 @@ import OrderModal from "../Modal";
 import Drawer from "../OrderDrawer";
 import OrdersToMake from "../OrdersToMake";
 import { Typography } from "@mui/material";
+import { drinksData } from "../../helpers/drinks";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { routes } from "../../routes";
 
 const OrderTab = () => {
-  const [value, setValue] = React.useState("1");
-  const [toggleModal, setToggleModal] = React.useState<boolean>(false);
+  const [value, setValue] = useState("1");
+  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [errorOrderMessage, setErrorOrderMessage] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -76,11 +80,32 @@ const OrderTab = () => {
           <OrderModal
             toggleModal={toggleModal}
             setToggleModal={setToggleModal}
+            setErrorOrderMessage={setErrorOrderMessage}
           />
-          <Drawer />
+          <Drawer
+            errorOrderMessage={errorOrderMessage}
+            setErrorOrderMessage={setErrorOrderMessage}
+          />
         </TabPanel>
         <TabPanel value="2">
-          <input type="time" />
+          {drinksData.map((drink) => {
+            return (
+              <CardFood
+                key={drink.id}
+                setToggleModal={setToggleModal}
+                foods={drink}
+              />
+            );
+          })}
+          <OrderModal
+            toggleModal={toggleModal}
+            setToggleModal={setToggleModal}
+            setErrorOrderMessage={setErrorOrderMessage}
+          />
+          <Drawer
+            errorOrderMessage={errorOrderMessage}
+            setErrorOrderMessage={setErrorOrderMessage}
+          />
         </TabPanel>
         <TabPanel value="3">
           <OrdersToMake />

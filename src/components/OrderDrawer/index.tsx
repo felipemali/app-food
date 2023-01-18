@@ -15,6 +15,9 @@ import OrderList from "./OrderList";
 const drawerBleeding = 56;
 
 interface Props {
+  errorOrderMessage: boolean;
+  setErrorOrderMessage: (error: boolean) => void;
+
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -89,7 +92,11 @@ export default function Drawer(props: Props) {
         >
           <Puller />
           <Typography component="span" sx={{ p: 2, color: "text.secondary" }}>
-            <OrderList setOpen={setOpen} />
+            <OrderList
+              setOpen={setOpen}
+              errorOrderMessage={props.errorOrderMessage}
+              setErrorOrderMessage={props.setErrorOrderMessage}
+            />
           </Typography>
         </StyledBox>
         <StyledBox
