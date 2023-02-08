@@ -15,14 +15,18 @@ type OrderListProps = {
   setOpen: (open: boolean) => void;
   errorOrderMessage: boolean;
   setErrorOrderMessage: (error: boolean) => void;
+  valueTab: (value: string) => void;
+  editFood: boolean;
 };
 
 const OrderList = ({
   setOpen,
   errorOrderMessage,
   setErrorOrderMessage,
+  valueTab,
+  editFood,
 }: OrderListProps) => {
-  const { order, setOrder } = useFood();
+  const { order, setOrder, currentFood } = useFood();
   const [inputAnotation, setInputAnotation] = useState<string>("");
 
   const handleToggle = (value: number) => () => {
@@ -56,42 +60,46 @@ const OrderList = ({
           onChange={(e) => setInputAnotation(e.target.value)}
         />
 
-        {order.map((food) => {
-          const labelId = `checkbox-list-label-${food.id}`;
-          return (
-            <ListItem
-              sx={{ mt: 1.5 }}
-              key={food.id}
-              secondaryAction={
-                <ListItemIcon>
-                  <DeleteIcon onClick={handleToggle(food.id)} />
-                </ListItemIcon>
-              }
-              disablePadding
-            >
-              <ListItemButton role={undefined} dense>
-                <ListItemText
-                  sx={{ size: "2rem" }}
-                  id={labelId}
-                  primary={
-                    <Typography
-                      component="span"
-                      variant="inherit"
-                      sx={{ fontSize: 17 }}
-                    >
-                      {food?.quantity} - {food?.name} {food.price}R$
-                    </Typography>
-                  }
-                />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+        {editFood === false &&
+          order.map((food) => {
+            const labelId = `checkbox-list-label-${food.id}`;
+            return (
+              <ListItem
+                sx={{ mt: 1.5 }}
+                key={food.id}
+                secondaryAction={
+                  <ListItemIcon>
+                    <DeleteIcon onClick={handleToggle(food.id)} />
+                  </ListItemIcon>
+                }
+                disablePadding
+              >
+                <ListItemButton role={undefined} dense>
+                  <ListItemText
+                    sx={{ size: "2rem" }}
+                    id={labelId}
+                    primary={
+                      <Typography
+                        component="span"
+                        variant="inherit"
+                        sx={{ fontSize: 17 }}
+                      >
+                        {food?.quantity} - {food?.name} {food.price}R$
+                      </Typography>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
       </List>
       <SaveButton
         inputAnotation={inputAnotation}
         setErrorOrderMessage={setErrorOrderMessage}
         setOpen={setOpen}
+        valueTab={valueTab}
+        setInputAnotation={setInputAnotation}
+        editFood={editFood}
       />
     </>
   );

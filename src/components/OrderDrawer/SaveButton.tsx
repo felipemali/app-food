@@ -9,6 +9,9 @@ type SaveButtonProps = {
   setErrorOrderMessage: (error: boolean) => void;
   setOpen: (open: boolean) => void;
   inputAnotation?: string;
+  valueTab: (value: string) => void;
+  setInputAnotation: (value: string) => void;
+  editFood: boolean;
 };
 
 export type Item = {
@@ -31,11 +34,14 @@ export type Order = {
 const SaveButton = ({
   setErrorOrderMessage,
   setOpen,
+  valueTab,
   inputAnotation,
+  setInputAnotation,
+  editFood,
 }: SaveButtonProps) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
+  const [idMake, setIdMake] = useState<number>(1);
   const { order, setToMake, toMake, setOrder, setQntToMake } = useFood();
   const timer = useRef<number>();
 
@@ -53,7 +59,6 @@ const SaveButton = ({
       clearTimeout(timer.current);
     };
   }, []);
-  const a: Order[] = [{ id: "a", total: 5, anotation: "eeee", items: order }];
 
   const handleButtonClick = () => {
     if (!loading) {
@@ -66,16 +71,23 @@ const SaveButton = ({
           setSuccess(true);
           setOpen(false);
           setQntToMake((oldNum) => oldNum + 1);
+          valueTab("3");
+          setInputAnotation("");
         } else {
           setErrorOrderMessage(true);
         }
       }, 2000);
       setSuccess(false);
     }
-    if (order.length > 0) {
+    if (editFood === false && order.length > 0) {
       setToMake([
         ...toMake,
-        [{ id: "a", total: 5, anotation: "eeee", items: order }],
+        {
+          id: setIdMake((oldNum) => oldNum + 1),
+          total: 5,
+          anotation: inputAnotation,
+          items: order,
+        },
       ]);
     }
   };

@@ -18,6 +18,9 @@ const OrderTab = () => {
   const [value, setValue] = useState("1");
   const [toggleModal, setToggleModal] = useState<boolean>(false);
   const [errorOrderMessage, setErrorOrderMessage] = useState(false);
+  const [nameButton, setNameButton] = useState(false);
+  const [indexOrder, setIndexOrder] = useState<number>(-1);
+  const [editFood, setEditFood] = useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -74,6 +77,7 @@ const OrderTab = () => {
                 key={food.id}
                 setToggleModal={setToggleModal}
                 foods={food}
+                nameButton={nameButton}
               />
             );
           })}
@@ -81,10 +85,15 @@ const OrderTab = () => {
             toggleModal={toggleModal}
             setToggleModal={setToggleModal}
             setErrorOrderMessage={setErrorOrderMessage}
+            indexOrder={indexOrder}
+            editFood={editFood}
+            setEditFood={setEditFood}
           />
           <Drawer
             errorOrderMessage={errorOrderMessage}
             setErrorOrderMessage={setErrorOrderMessage}
+            value={setValue}
+            editFood={editFood}
           />
         </TabPanel>
         <TabPanel value="2">
@@ -94,6 +103,7 @@ const OrderTab = () => {
                 key={drink.id}
                 setToggleModal={setToggleModal}
                 foods={drink}
+                nameButton={nameButton}
               />
             );
           })}
@@ -101,14 +111,23 @@ const OrderTab = () => {
             toggleModal={toggleModal}
             setToggleModal={setToggleModal}
             setErrorOrderMessage={setErrorOrderMessage}
+            indexOrder={indexOrder}
+            editFood={editFood}
+            setEditFood={setEditFood}
           />
           <Drawer
             errorOrderMessage={errorOrderMessage}
             setErrorOrderMessage={setErrorOrderMessage}
+            value={setValue}
+            editFood={editFood}
           />
         </TabPanel>
         <TabPanel value="3">
-          <OrdersToMake />
+          <OrdersToMake
+            value={setValue}
+            setIndexOrder={setIndexOrder}
+            setEditFood={setEditFood}
+          />
         </TabPanel>
       </TabContext>
     </Box>

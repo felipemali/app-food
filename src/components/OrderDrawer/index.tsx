@@ -17,6 +17,8 @@ const drawerBleeding = 56;
 interface Props {
   errorOrderMessage: boolean;
   setErrorOrderMessage: (error: boolean) => void;
+  value: (value: string) => void;
+  editFood: boolean;
 
   /**
    * Injected by the documentation to work in an iframe.
@@ -96,6 +98,8 @@ export default function Drawer(props: Props) {
               setOpen={setOpen}
               errorOrderMessage={props.errorOrderMessage}
               setErrorOrderMessage={props.setErrorOrderMessage}
+              valueTab={props.value}
+              editFood={props.editFood}
             />
           </Typography>
         </StyledBox>

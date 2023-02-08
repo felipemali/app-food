@@ -8,6 +8,9 @@ import { useFood } from "../../hooks";
 type ProgressProps = {
   setToggleModal: (boolean: boolean) => void;
   setErrorOrderMessage: (error: boolean) => void;
+  indexOrder: number;
+  editFood: boolean;
+  setEditFood: (food: boolean) => void;
 };
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number }
@@ -36,14 +39,37 @@ function CircularProgressWithLabel(
   );
 }
 
-const Progress = ({ setToggleModal, setErrorOrderMessage }: ProgressProps) => {
+const Progress = ({
+  setToggleModal,
+  setErrorOrderMessage,
+  indexOrder,
+  editFood,
+  setEditFood,
+}: ProgressProps) => {
   const [progress, setProgress] = useState<number>(1);
 
-  const { order, setOrder, currentFood } = useFood();
+  const { order, setOrder, currentFood, toMake } = useFood();
   const timer = useRef<number>();
 
   const checkFood = () => {
     const index: number = order.findIndex(({ id }) => id === currentFood.id);
+    if (editFood) {
+      const indexEditOrder: number = toMake[indexOrder].items.findIndex(
+        ({ id }: any) => id === currentFood.id
+      );
+
+      if (indexEditOrder !== -1) {
+        toMake[indexOrder].items[indexEditOrder].quantity += progress;
+      } else {
+        toMake[indexOrder].items.push({
+          name: currentFood.name,
+          price: currentFood.price,
+          quantity: progress,
+          id: currentFood.id,
+          total_price: progress * currentFood.price,
+        });
+      }
+    }
 
     if (index !== -1) {
       order[index].quantity += progress;
@@ -56,12 +82,16 @@ const Progress = ({ setToggleModal, setErrorOrderMessage }: ProgressProps) => {
           quantity: progress,
           id: currentFood.id,
           total_price: progress * currentFood.price,
-          
         },
       ]);
     }
+
     timer.current = window.setTimeout(() => {
+      if (editFood) {
+        setOrder([]);
+      }
       setToggleModal(false);
+      setEditFood(false);
     }, 150);
   };
 

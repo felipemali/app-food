@@ -6,6 +6,7 @@ import "./index.css";
 
 type Food = {
   setToggleModal: (boolean: boolean) => void;
+  nameButton: boolean;
   foods: {
     name: string;
     img: string;
@@ -63,6 +64,7 @@ export const CardFood = (props: Food) => {
             p={1}
             back={"#fa942e"}
             color={"#fff"}
+            nameButton={props.nameButton}
           />
         </Box>
       </Box>

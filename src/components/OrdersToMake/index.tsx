@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
 import { Food } from "../../provider/wishList";
 
-const OrdersToMake = () => {
+const OrdersToMake = (props: any) => {
   const { order, toMake, setOrder, setToMake, setQntToMake, setTotalMade } =
     useFood();
 
@@ -23,8 +23,7 @@ const OrdersToMake = () => {
       old.filter((_: any, currentIndex: number) => index !== currentIndex)
     );
   };
-  // console.log(toMake[0][0].items);
-  console.log(toMake);
+  props.setIndexOrder(-1);
 
   return (
     <>
@@ -50,8 +49,19 @@ const OrdersToMake = () => {
               }
               disablePadding
             >
-              <Button sx={{ color: "#c9bd14" }}>Editar</Button>
+              <Button
+                onClick={() => {
+                  props.setEditFood(true);
+                  props.setIndexOrder(index);
+                  props.value("1");
+                }}
+                sx={{ color: "#c9bd14" }}
+              >
+                Editar
+              </Button>
               {orders?.items.map((item: any) => {
+                // console.log(item);
+
                 key_paper += 1;
                 const labelId = `checkbox-list-label-${item.id}`;
                 return (
@@ -72,10 +82,22 @@ const OrdersToMake = () => {
                   </ListItemButton>
                 );
               })}
+              {/* <Typography component="span" variant="h6" sx={{ ml: 2, mt: 0.7 }}>
+                Anotação:
+              </Typography>
+              <Typography
+                color="#ac6a28"
+                component="span"
+                sx={{ ml: 1 }}
+                variant="h6"
+              >
+                {toMake[index].anotation}
+              </Typography> */}
+
               <Typography
                 display="flex"
                 component="span"
-                variant="h5"
+                variant="h6"
                 sx={{ ml: 2, mt: 0.7 }}
               >
                 Total:
@@ -83,30 +105,15 @@ const OrdersToMake = () => {
                   color="red"
                   component="span"
                   sx={{ ml: 1 }}
-                  variant="h5"
+                  variant="h6"
                 >
-                  {toMake[index].reduce(
-                    (acc: number, curr: any) => acc + curr.total_price,
+                  {console.log(toMake[index])}
+                  {toMake[index].items.reduce(
+                    (acc: number, curr: any) =>
+                      acc + curr.quantity * curr.price,
                     0
                   )}
                   R$
-                </Typography>
-              </Typography>
-
-              <Typography
-                display="flex"
-                component="span"
-                variant="h5"
-                sx={{ ml: 2, mt: 0.7 }}
-              >
-                Anotação:
-                <Typography
-                  color="red"
-                  component="span"
-                  sx={{ ml: 1 }}
-                  variant="h5"
-                >
-                  {toMake[index].map((anotation: any) => anotation.anotation)}
                 </Typography>
               </Typography>
             </ListItem>

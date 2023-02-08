@@ -5,37 +5,37 @@ export const drinksData: FoodProps[] = [
     name: "Coca Cola 2L",
     img: "https://thepetitpizzaria.com.br/parobe/wp-content/uploads/2021/06/Pet-2-Litros-Coca-Cola-PNG.png",
     price: 10.0,
-    id: 1,
+    id: 10,
   },
   {
     name: "Coca Cola 1L",
     img: "https://img2.gratispng.com/20180616/vgk/kisspng-coca-cola-zero-glass-bottle-bouteille-de-coca-cola-coca-cola-zero-5b255a8a084237.3768248515291746660338.jpg",
     price: 6.5,
-    id: 2,
+    id: 20,
   },
   {
     name: "Coca cola lata Mini",
     img: "https://www.paodeacucar.com/img/uploads/1/908/13124908.jpeg",
     price: 3.5,
-    id: 3,
+    id: 30,
   },
 
   {
     name: "Coca cola lata Normal",
     img: "https://static-images.ifood.com.br/image/upload/t_low/pratos/77fae207-1643-49ae-8f48-83cf9131681a/201905241852_1Fse_c.png",
     price: 4.0,
-    id: 4,
+    id: 40,
   },
   {
     name: "Del valle",
     img: "https://araujo.vteximg.com.br/arquivos/ids/4181736-1000-1000/07894900660333.jpg?v=637974859247500000",
     price: 5,
-    id: 5,
+    id: 50,
   },
   {
     name: "Água",
     img: "https://www.imigrantesbebidas.com.br/bebida/images/products/full/2893-agua-mineral-crystal-sem-gas-500ml.jpg",
     price: 3.0,
-    id: 6,
+    id: 60,
   },
 ];

@@ -20,12 +20,19 @@ type OrderModalProps = {
   setToggleModal: (boolean: boolean) => void;
   toggleModal: boolean;
   setErrorOrderMessage: (error: boolean) => void;
+  indexOrder: number;
+
+  editFood: boolean;
+  setEditFood: (food: boolean) => void;
 };
 
 const OrderModal = ({
   setToggleModal,
   toggleModal,
   setErrorOrderMessage,
+  indexOrder,
+  editFood,
+  setEditFood,
 }: OrderModalProps) => {
   const { currentFood } = useFood();
 
@@ -69,6 +76,9 @@ const OrderModal = ({
           <Progress
             setToggleModal={setToggleModal}
             setErrorOrderMessage={setErrorOrderMessage}
+            editFood={editFood}
+            indexOrder={indexOrder}
+            setEditFood={setEditFood}
           />
         </Box>
       </Modal>
