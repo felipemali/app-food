@@ -1,19 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../../components/Header";
-import OrderTab from "../../components/OrderTab";
-import WishProvider from "../../provider/wishList";
-import { routes } from "../../routes";
+import OrderTab from "../../components/Orders/OrderTab";
 
+import { useFindOrders } from "../../hooks";
+
+// export const db = getFirestore(firebaseApp);
+// export const orderCollectionRef = collection(db, "orders");
 const Home = () => {
+  // const data = orders.map((e) => e.data.map((r) => r.name));
+  // const orders = useFindOrders();
+  // const data = orders.map((e) => e.data?.map((o) => o));
+  // console.log(data);
+
   return (
-    <WishProvider>
-      {/* <Routes>
-          <Route path={routes.home.path} element={<Header />} />
-          <Route path={routes.home.path} element={<OrderTab />} />
-        </Routes> */}
+    <>
       <Header />
       <OrderTab />
-    </WishProvider>
+    </>
   );
 };
 export default Home;

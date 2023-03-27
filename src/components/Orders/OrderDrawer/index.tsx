@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Progress from "../Modal/Progress";
-import { useFood } from "../../hooks";
+import Progress from "../../Modal/Progress";
+import { useFood } from "../../../hooks";
 import OrderList from "./OrderList";
 
 const drawerBleeding = 56;
@@ -20,10 +20,6 @@ interface Props {
   value: (value: string) => void;
   editFood: boolean;
 
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
@@ -46,16 +42,11 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 export default function Drawer(props: Props) {
-  const { window } = props;
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-
-  // This is used only for the example
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Root>
@@ -69,7 +60,6 @@ export default function Drawer(props: Props) {
       />
 
       <SwipeableDrawer
-        container={container}
         anchor="bottom"
         open={open}
         onClose={toggleDrawer(false)}

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { Order } from "../components/OrderDrawer/SaveButton";
+import { Order } from "../components/Orders/OrderDrawer/SaveButton";
 type ProviderProps = {
   children: React.ReactNode;
 };
@@ -17,18 +17,25 @@ type CurrentFoodProps = {
   price: number;
   id: number;
 };
+type ToMakeProps = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+};
 
 export type WishListContextProps = {
   order: Food[];
   setOrder: (food: Food[]) => void;
   currentFood: CurrentFoodProps;
   setCurrentFood: (currentFood: CurrentFoodProps) => void;
-  toMake: any;
+  toMake: Order[];
   setToMake: (make: any) => void;
   qntToMake: number;
   setQntToMake: (placed: (placed: number) => number) => void;
   totalMade: number;
   setTotalMade: (done: (done: number) => number) => void;
+  teste: CurrentFoodProps;
 };
 
 export const WishListContext = createContext<WishListContextProps | null>(null);
@@ -43,6 +50,11 @@ const WishProvider = ({ children }: ProviderProps) => {
   const [toMake, setToMake] = useState<Order[]>([]);
   const [qntToMake, setQntToMake] = useState<number>(0);
   const [totalMade, setTotalMade] = useState<number>(0);
+  const [teste, setTeste] = useState<CurrentFoodProps>({
+    name: "x-salada",
+    price: 12,
+    id: 0,
+  });
 
   const values: WishListContextProps = {
     order,
@@ -55,6 +67,7 @@ const WishProvider = ({ children }: ProviderProps) => {
     setQntToMake,
     totalMade,
     setTotalMade,
+    teste,
   };
 
   return (

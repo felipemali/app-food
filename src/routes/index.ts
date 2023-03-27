@@ -7,4 +7,8 @@ export const routes = {
     path: "/make",
     title: "para-fazer",
   },
+    dataOrder:{
+      path: "/data-order",
+      title: "informações dos pedidos"
+    }
 };

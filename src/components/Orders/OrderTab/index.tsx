@@ -4,15 +4,15 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { CardFood } from "../CardFood";
-import { FoodProps, data } from "../../helpers/foods";
-import OrderModal from "../Modal";
+import { CardFood } from "../../CardFood";
+import { FoodProps, data } from "../../../helpers/foods";
+import OrderModal from "../../Modal";
 import Drawer from "../OrderDrawer";
 import OrdersToMake from "../OrdersToMake";
 import { Typography } from "@mui/material";
-import { drinksData } from "../../helpers/drinks";
+import { drinksData } from "../../../helpers/drinks";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { routes } from "../../routes";
+import { routes } from "../../../routes";
 
 const OrderTab = () => {
   const [value, setValue] = useState("1");
@@ -31,7 +31,6 @@ const OrderTab = () => {
       sx={{
         width: "100%",
         typography: "body1",
-
         borderRadius: "25px 25px 0 0",
         background: " linear-gradient(90deg, #220e03f8 8%, #4d1f04f8 95%)",
       }}

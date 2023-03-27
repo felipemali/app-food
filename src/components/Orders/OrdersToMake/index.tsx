@@ -1,34 +1,64 @@
-import { useState, useEffect, useRef } from "react";
-import { useFood } from "../../hooks";
+import { useFood } from "../../../hooks";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Button, Paper, Typography } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
-import { Food } from "../../provider/wishList";
-
+import { Food } from "../../../provider/wishList";
+import { addDoc } from "firebase/firestore";
+import { orderCollectionRef } from "../../../firebase";
+import { Order } from "../OrderDrawer/SaveButton";
+import { useState } from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+type Teste = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  total_price: number;
+};
 const OrdersToMake = (props: any) => {
-  const { order, toMake, setOrder, setToMake, setQntToMake, setTotalMade } =
+  const { toMake, setToMake, setQntToMake, setTotalMade, qntToMake } =
     useFood();
+  const [or, setOr] = useState<Teste | {}>({});
 
   let key_paper = 1;
-
   const deleteToMake = (index: number) => {
     setQntToMake((oldNum) => oldNum - 1);
     setTotalMade((oldNum) => oldNum + 1);
-    setToMake((old: any) =>
+    setToMake((old: Order[]) =>
       old.filter((_: any, currentIndex: number) => index !== currentIndex)
     );
   };
-  props.setIndexOrder(-1);
 
+  const addOrderDataBase = (index: number) => {
+    console.log(toMake[index].items);
+    const a = toMake[index].items.map((e) => setOr(e));
+
+    const order = addDoc(orderCollectionRef, {
+      data: toMake[index].items,
+    });
+    // console.log(a);
+  };
+  props.setIndexOrder(-1);
+  // console.log(or);
   return (
     <>
-      {toMake?.map((orders: any, index: number) => (
-        <Paper sx={{ mt: 3 }} key={key_paper + 1}>
+      {toMake?.map((orders, index: number) => (
+        // <Paper sx={{ mt: 3 }} key={key_paper + 1}>
+        <Accordion sx={{ mt: 1 }}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Pedido {index + 1}</Typography>
+          </AccordionSummary>
           <List
             sx={{
               width: "100%",
@@ -43,7 +73,10 @@ const OrdersToMake = (props: any) => {
                 <ListItemIcon>
                   <Checkbox
                     checked={false}
-                    onClick={() => deleteToMake(index)}
+                    onClick={() => {
+                      deleteToMake(index);
+                      addOrderDataBase(index);
+                    }}
                   />
                 </ListItemIcon>
               }
@@ -59,27 +92,29 @@ const OrdersToMake = (props: any) => {
               >
                 Editar
               </Button>
-              {orders?.items.map((item: any) => {
+              {orders?.items.map((item: Food) => {
                 // console.log(item);
 
                 key_paper += 1;
                 const labelId = `checkbox-list-label-${item.id}`;
                 return (
-                  <ListItemButton role={undefined} dense key={item.id}>
-                    <ListItemText
-                      sx={{ size: "2rem" }}
-                      id={labelId}
-                      primary={
-                        <Typography
-                          component="span"
-                          variant="inherit"
-                          sx={{ fontSize: 17 }}
-                        >
-                          {item?.quantity} - {item?.name} {item?.price}R$
-                        </Typography>
-                      }
-                    />
-                  </ListItemButton>
+                  <AccordionDetails sx={{ p: 0, m: 0 }}>
+                    <ListItemButton role={undefined} dense key={item.id}>
+                      <ListItemText
+                        sx={{ size: "2rem" }}
+                        id={labelId}
+                        primary={
+                          <Typography
+                            component="span"
+                            variant="inherit"
+                            sx={{ fontSize: 17 }}
+                          >
+                            {item?.quantity} - {item?.name} {item?.price}R$
+                          </Typography>
+                        }
+                      />
+                    </ListItemButton>
+                  </AccordionDetails>
                 );
               })}
               {/* <Typography component="span" variant="h6" sx={{ ml: 2, mt: 0.7 }}>
@@ -107,9 +142,8 @@ const OrdersToMake = (props: any) => {
                   sx={{ ml: 1 }}
                   variant="h6"
                 >
-                  {console.log(toMake[index])}
                   {toMake[index].items.reduce(
-                    (acc: number, curr: any) =>
+                    (acc: number, curr: Food) =>
                       acc + curr.quantity * curr.price,
                     0
                   )}
@@ -118,7 +152,8 @@ const OrdersToMake = (props: any) => {
               </Typography>
             </ListItem>
           </List>
-        </Paper>
+        </Accordion>
+        // </Paper>
       ))}
     </>
   );
