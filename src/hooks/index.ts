@@ -1,11 +1,11 @@
-import { getDocs } from "firebase/firestore";
 import { useContext } from "react";
 import { WishListContext } from "../provider/wishList";
 import { useEffect, useState } from "react";
-import { orderCollectionRef } from "../firebase";
+import { db } from "../firebase";
+import { useOrderResume } from "./useOrderResume";
 
 type DataOrderProps = {
-  id: string;
+  id: number;
   name: string;
   quantity: number;
   total: number;
@@ -27,15 +27,15 @@ export const useFood = () => {
   throw new Error("Context is not defined.");
 };
 
-export const useFindOrders = () => {
-  const [dataOrder, setDataOrder] = useState<OrderProps[]>([]);
+// const dates = [
+//   {
+//     name: "Fevereiro",
+//     date: new Date(`${new Date().getFullYear()}-02-01 00:00`),
+//   },
+// ];
 
-  useEffect(() => {
-    getDocs(orderCollectionRef).then((data) => {
-      const newData = data.docs.map((doc) => doc.data()) as OrderProps[];
-      setDataOrder(newData);
-    });
-  }, []);
+export const useTotalSales = () => {
+  const resume = useOrderResume();
 
-  return dataOrder;
+  return resume.reduce((acc, { total }) => acc + total, 0);
 };

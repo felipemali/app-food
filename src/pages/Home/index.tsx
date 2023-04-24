@@ -1,7 +1,6 @@
 import Header from "../../components/Header";
 import OrderTab from "../../components/Orders/OrderTab";
 
-import { useFindOrders } from "../../hooks";
 
 // export const db = getFirestore(firebaseApp);
 // export const orderCollectionRef = collection(db, "orders");

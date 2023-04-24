@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -8,8 +7,6 @@ import Home from "./pages/Home";
 import WishProvider from "./provider/wishList";
 import reportWebVitals from "./reportWebVitals";
 import { routes } from "./routes";
-
-
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

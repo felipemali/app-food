@@ -1,95 +1,61 @@
-import { useFindOrders } from "../../../hooks";
-import { Food } from "../../../provider/wishList";
 import Box from "@mui/material/Box";
-import hb from "../../../assets/hb.png";
-import {
-  Accordion,
-  AccordionSummary,
-  Checkbox,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useEffect, useState } from "react";
-import BasicCard from "../card";
+import Table from "./Table";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { style } from "../../../style";
+import { Link } from "react-router-dom";
+import { routes } from "../../../routes";
+import Drawer from "../../Orders/OrderDrawer";
+import DrawerProfit from "./DrawerProfit";
 
-type TotalOrdersProps = {
-  total: number;
-  setTotal: (placed: (placed: number) => number) => void;
-};
-// type Teste = {
-//   id: number;
-//   name: string;
-//   price: number;
-//   quantity: number;
-//   total_price: number;
+// type TotalOrdersProps = {
+//   total: number;
+//   setTotal: (placed: (placed: number) => number) => void;
 // };
 const DataOrders = () => {
-  const orders = useFindOrders();
-  const [total, setTotal] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(0);
-  console.log(orders);
-  console.log(quantity);
-
-  useEffect(() => {
-    const sumTotal = orders.map((e) =>
-      e.data.reduce((acc, curr) => acc + curr.quantity * curr.price, 0)
-    );
-    sumTotal.map((e) => setTotal((oldVlue) => oldVlue + e));
-    const quantity = orders.map((e) =>
-      e.data.reduce((acc, curr) => acc + curr.quantity, 0)
-    );
-    setQuantity(quantity.reduce((soma, i) => soma + i, 0));
-
-    const qntItems = orders.map((e) => e.data.map((r) => console.log(r.id)));
-  }, [orders]);
+  const { primary, secondary } = style.pallete;
 
   return (
-    <Box
-      display="flex"
-
-      // sx={{
-      //   background: " linear-gradient(to left top, #312219 8%, #312219 95%)",
-      //   height: "100vh",
-      // }}
-    >
-      <BasicCard spacinngMl={1} total={total} description="Faturamento" />
-      <BasicCard spacinngMl={2} description="Qtd Vendidos" total={quantity} />
-      <BasicCard spacinngMr={1} spacinngMl={2} description="Qtd de pedidos" />
-
-      {/* <img src={hb} alt="" /> */}
-      {/* <Typography color=" #e2d0aa">Total vendidos</Typography> */}
-      {/* <img src={hb} alt="" /> */}
-
-      {/* {orders.map((data) => {
-        const sum = data.data?.reduce(
-          (acc, curr) => acc + curr.quantity * curr.price,
-          0
-        );
-
-        return (
-          <div style={{ marginTop: 2 }}>
-            { {data.data?.map((e) => (
-              <>
-                <p>{e.name}</p>
-                <p>{e.total}</p>
-              </>
-            ))} }
-
-            <div>
-              Total:
-              {total}
-            </div>
-          </div>
-        );
-      })} */}
-    </Box>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" sx={{ bgcolor: primary }}>
+          <Toolbar variant="dense">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: style.spaccing.m_sx }}
+            >
+              <Link to={routes.home.path}>
+                <ArrowBackIcon
+                  sx={{
+                    border: `1px solid ${secondary}`,
+                    borderRadius: style.dimensions.borderRadius,
+                    bgcolor: secondary,
+                    color: primary,
+                  }}
+                />
+              </Link>
+            </IconButton>
+            <Typography
+              sx={{ m: "auto", fontWeight: style.fonts.fontweight }}
+              align="center"
+              variant="h6"
+              color="inherit"
+              component="div"
+            >
+              Informações
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      {/* / */}
+      <Table />
+      <DrawerProfit />
+    </>
   );
 };
 

@@ -1,10 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+// import "firebase/compat/database";
+// import "firebase/database";
 
-export const firebaseApp = initializeApp({
+// const db = firebaseApp.firestore();
+
+// export const orderCollectionRef = collection(db, "orders");
+
+var firebaseConfig = {
   apiKey: "AIzaSyB92Ez7FxpnpdPXx-1VGIMH980JpT3KM8E",
   authDomain: "foodapp-5b4dc.firebaseapp.com",
   projectId: "foodapp-5b4dc",
-});
-export const db = getFirestore(firebaseApp);
-export const orderCollectionRef = collection(db, "orders");
+};
+
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.firestore();

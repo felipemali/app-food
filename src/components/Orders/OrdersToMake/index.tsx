@@ -8,13 +8,13 @@ import { Button, Paper, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { Food } from "../../../provider/wishList";
 import { addDoc } from "firebase/firestore";
-import { orderCollectionRef } from "../../../firebase";
 import { Order } from "../OrderDrawer/SaveButton";
-import { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { db } from "../../../firebase";
+
 type Teste = {
   id: number;
   name: string;
@@ -25,9 +25,8 @@ type Teste = {
 const OrdersToMake = (props: any) => {
   const { toMake, setToMake, setQntToMake, setTotalMade, qntToMake } =
     useFood();
-  const [or, setOr] = useState<Teste | {}>({});
+  // const [or, setOr] = useState<Teste | {}>({});
 
-  let key_paper = 1;
   const deleteToMake = (index: number) => {
     setQntToMake((oldNum) => oldNum - 1);
     setTotalMade((oldNum) => oldNum + 1);
@@ -36,20 +35,18 @@ const OrdersToMake = (props: any) => {
     );
   };
 
-  const addOrderDataBase = (index: number) => {
-    console.log(toMake[index].items);
-    const a = toMake[index].items.map((e) => setOr(e));
-
-    const order = addDoc(orderCollectionRef, {
-      data: toMake[index].items,
+  const addOrderDataBase = (order: Order) => {
+    db.collection("orders").add({
+      items: order.items,
+      createdAt: new Date(),
     });
-    // console.log(a);
   };
+
   props.setIndexOrder(-1);
-  // console.log(or);
+
   return (
     <>
-      {toMake?.map((orders, index: number) => (
+      {toMake?.map((order, index: number) => (
         // <Paper sx={{ mt: 3 }} key={key_paper + 1}>
         <Accordion sx={{ mt: 1 }}>
           <AccordionSummary
@@ -75,7 +72,7 @@ const OrdersToMake = (props: any) => {
                     checked={false}
                     onClick={() => {
                       deleteToMake(index);
-                      addOrderDataBase(index);
+                      addOrderDataBase(order);
                     }}
                   />
                 </ListItemIcon>
@@ -92,10 +89,9 @@ const OrdersToMake = (props: any) => {
               >
                 Editar
               </Button>
-              {orders?.items.map((item: Food) => {
+              {order?.items.map((item: Food) => {
                 // console.log(item);
 
-                key_paper += 1;
                 const labelId = `checkbox-list-label-${item.id}`;
                 return (
                   <AccordionDetails sx={{ p: 0, m: 0 }}>

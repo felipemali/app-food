@@ -95,3 +95,14 @@ export const data: FoodProps[] = [
     id: 12,
   },
 ];
+
+// id
+// 5
+// name
+// "x-Salada"
+// price
+// 10
+// quantity
+// 2
+// total_price
+// 20
